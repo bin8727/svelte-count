@@ -3,6 +3,8 @@
 	
 	let add: boolean = false;
 	let cards: CardType[] = [];
+	const minValue: number = 0;
+	const maxValue: number = 99;
 
 	const handleAdd = () => {
 		add = true;
@@ -20,14 +22,24 @@
 	};
 
 	const incrementCardValue = (id: number) => {
-		cards = cards.map((card) => 
-			card.id === id ? { ...card, value: card.value + 1 } : card);
-	};
+    cards = cards.map((card) => {
+      if (card.id === id && card.value < maxValue) {
+        return { ...card, value: card.value + 1 };
+      }
+
+      return card;
+    });
+  };
 
 	const decrementCardValue = (id: number) => {
-		cards = cards.map((card) => 
-			card.id === id ? { ...card, value: card.value - 1 } : card);
-	};
+    cards = cards.map((card) => {
+      if (card.id === id && card.value > minValue) {
+        return { ...card, value: card.value - 1 };
+      }
+			
+      return card;
+    });
+  };
 
 	$: count = cards.length;
 	$: {

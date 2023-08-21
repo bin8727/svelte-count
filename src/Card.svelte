@@ -5,21 +5,8 @@
 
   export let card: CardType;
   export let remove: () => void;
-
-  const minValue: number = 0;
-  const maxValue: number = 99;
-
-  const incrementValue = () => {
-    if (card.value < maxValue) {
-      card.value += 1;
-    }
-  };
-
-  const decrementValue = () => {
-    if (card.value > minValue) {
-      card.value -= 1;
-    }
-  };
+  export let incrementValue: () => void;
+  export let decrementValue: () => void;
 </script>
 
 <div class="border-2 border-solid border-black rounded-lg flex flex-col justify-center items-center relative p-6 m-4">

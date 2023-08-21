@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Card from "../Card.svelte";
+	import _ from 'lodash';
 	
 	let add: boolean = false;
 	let cards: CardType[] = [];
@@ -22,29 +23,32 @@
 	};
 
 	const incrementCardValue = (id: number) => {
-    cards = cards.map((card) => {
-      if (card.id === id && card.value < maxValue) {
-        return { ...card, value: card.value + 1 };
-      }
+  	cards = cards.map((card) => {
+    	if (card.id === id && card.value < maxValue) {
+    	  const incrementedCard = { ...card, value: card.value + 1 };
+    	  return incrementedCard;
+    	}
 
-      return card;
-    });
-  };
+    	return card;
+  	});
+
+  	cards = _.sortBy(cards, [(card) => card.value]);
+	};
 
 	const decrementCardValue = (id: number) => {
-    cards = cards.map((card) => {
-      if (card.id === id && card.value > minValue) {
-        return { ...card, value: card.value - 1 };
-      }
-			
-      return card;
-    });
-  };
+  	cards = cards.map((card) => {
+    	if (card.id === id && card.value > minValue) {
+    	  const decrementedCard = { ...card, value: card.value - 1 };
+    	  return decrementedCard;
+    	}
+
+    	return card;
+  	});
+
+  	cards = _.sortBy(cards, [(card) => card.value]);
+	};
 
 	$: count = cards.length;
-	$: {
-		cards.sort((a, b) => a.value - b.value);
-	}
 </script>
 
 <div class="my-20 mx-auto w-[40rem] rounded-lg p-4 text-center bg-[#f4f0fa]">
@@ -70,7 +74,7 @@
 </div>
 
 {#if add}
-	<div class="grid grid-cols-4 my-20 mx-auto w-[40rem] rounded-lg p-4 text-center bg-[#f4f0fa]">
+	<div class="flex flex-wrap justify-center items-center my-20 mx-auto w-[40rem] rounded-lg p-4 text-center bg-[#f4f0fa]">
 		{#each cards as card}
 			<Card 
 				card={card} 

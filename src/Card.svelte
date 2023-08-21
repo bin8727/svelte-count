@@ -9,7 +9,7 @@
   export let decrementValue: () => void;
 </script>
 
-<div class="border-2 border-solid border-black rounded-lg flex flex-col justify-center items-center relative p-6 m-4">
+<div class="border-2 border-solid border-black rounded-lg max-w-[7.5rem] w-full flex flex-col justify-center items-center relative p-6 m-4">
   <button on:click={incrementValue}>
     <Up />
   </button>

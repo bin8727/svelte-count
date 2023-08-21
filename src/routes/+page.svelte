@@ -23,29 +23,25 @@
 	};
 
 	const incrementCardValue = (id: number) => {
-  	cards = cards.map((card) => {
-    	if (card.id === id && card.value < maxValue) {
-    	  const incrementedCard = { ...card, value: card.value + 1 };
-    	  return incrementedCard;
-    	}
-
-    	return card;
-  	});
-
-  	cards = _.sortBy(cards, [(card) => card.value]);
+  	cards = _(cards)
+  	  .map((card) =>
+  	    card.id === id && card.value < maxValue
+  	      ? { ...card, value: card.value + 1 }
+  	      : card
+  	  )
+  	  .sortBy("value")
+  	  .value();
 	};
 
 	const decrementCardValue = (id: number) => {
-  	cards = cards.map((card) => {
-    	if (card.id === id && card.value > minValue) {
-    	  const decrementedCard = { ...card, value: card.value - 1 };
-    	  return decrementedCard;
-    	}
-
-    	return card;
-  	});
-
-  	cards = _.sortBy(cards, [(card) => card.value]);
+  	cards = _(cards)
+			.map((card) =>
+				card.id === id && card.value > minValue
+				? { ...card, value: card.value - 1}
+				: card
+			)
+			.sortBy('value')
+			.value();
 	};
 
 	$: count = cards.length;
@@ -74,7 +70,7 @@
 </div>
 
 {#if add}
-	<div class="flex flex-wrap justify-center items-center my-20 mx-auto w-[40rem] rounded-lg p-4 text-center bg-[#f4f0fa]">
+	<div class="flex flex-wrap justify-start items-center my-20 mx-auto w-[40rem] rounded-lg p-4 text-center bg-[#f4f0fa]">
 		{#each cards as card}
 			<Card 
 				card={card} 
